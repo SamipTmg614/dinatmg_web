@@ -1,0 +1,106 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School & College Administration Profile</title>
+  <link rel="stylesheet" href="{% static 'web/style.css' %}">
+</head>
+<body>
+
+<header class="navbar">
+  <div class="logo">Deena</div>
+  <nav>
+    <ul class="nav-links">
+      <li><a href="#overview">Administration Overview</a></li>
+      <li><a href="#initiatives">Campus Initiatives</a></li>
+      <li><a href="#blog">Blog Posts</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    </nav>
+</header>
+
+<main>
+<section id="overview" class="hero">
+  <div class="hero-text">
+    <p class="intro">WELCOME, I AM</p>
+    <h1>Deena</h1>
+    <p class="description">
+      I work in school and college administration, with a focus on building smooth academic operations and supportive learning environments. My work includes coordinating admissions, managing student services, planning institutional schedules, and collaborating with faculty and staff to improve campus outcomes. I am committed to clear communication, policy compliance, and student-centered administration.
+
+    </p>
+
+  </div>
+
+  <div class="hero-image">
+    <img src="{% static 'web/profile.png' %}" alt="Profile Image">
+  </div>
+</section>
+
+<section id="initiatives" class="content-section">
+  <h2>Campus Initiatives</h2>
+  <p class="section-text">
+    I support institutional growth through practical and student-focused administrative initiatives.
+  </p>
+  <div class="initiatives-grid">
+    <article class="initiative-card">
+      <h3>Admissions Coordination</h3>
+      <p>Improved admission workflows, application tracking, and communication with students and families.</p>
+    </article>
+    <article class="initiative-card">
+      <h3>Student Services</h3>
+      <p>Strengthened support systems for enrollment, records, counseling referrals, and academic documentation.</p>
+    </article>
+    <article class="initiative-card">
+      <h3>Academic Scheduling</h3>
+      <p>Coordinated class schedules, exam timelines, and department calendars for smooth semester operations.</p>
+    </article>
+  </div>
+</section>
+
+<section id="blog" class="content-section blog-section">
+  <h2>Blog Posts</h2>
+  <p class="section-text">Latest updates published from the admin backend.</p>
+
+  <div class="blog-grid">
+    {% for post in blog_posts %}
+      <article class="blog-card">
+        {% if post.image %}
+          <img class="blog-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+        {% endif %}
+        <p class="blog-date">{{ post.date_uploaded|date:"M d, Y" }}</p>
+        <h3>{{ post.title }}</h3>
+        <p class="blog-body">{{ post.body|truncatechars:220 }}</p>
+      </article>
+    {% empty %}
+      <article class="blog-empty">
+        <h3>No blog posts yet</h3>
+        <p>Create a post in Django admin and it will appear here automatically.</p>
+      </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section id="contact" class="content-section">
+  <div class="contact-header">
+    <h2>Contact</h2>
+    <button id="messageToggle" class="message-icon-btn" type="button" aria-label="Open message box" title="Send a message">&#9993;</button>
+  </div>
+  <p class="section-text">you can contact me through following media</p>
+  <p class="contact-line"><strong>Email:</strong> deena.admin@gmail.com</p>
+  <p class="contact-line"><strong>Phone:</strong> +1 (000) 123-4567</p>
+  <div id="messageBox" class="message-box hidden" aria-hidden="true">
+    <label for="adminMessage">Message</label>
+    <textarea id="adminMessage" rows="4" placeholder="Write your message here..."></textarea>
+    <div class="message-actions">
+      <button id="sendMessageBtn" type="button">Send</button>
+      <button id="closeMessageBtn" type="button">Close</button>
+    </div>
+  </div>
+</section>
+</main>
+
+<script src="{% static 'web/script.js' %}"></script>
+</body>
+</html>

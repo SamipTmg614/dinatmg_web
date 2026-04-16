@@ -1,0 +1,272 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+body {
+  background: #d8d8d8ca;
+  padding: 30px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 20px 50px;
+}
+
+.logo {
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+  gap: 30px;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: white;
+  padding: 50px;
+}
+
+.hero-text {
+  width: 50%;
+}
+
+.intro {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #444;
+}
+
+.hero-text h1 {
+  font-size: 80px;
+  color: #d9482b;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-size: 20px;
+  color: #555;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+button {
+  padding: 15px 25px;
+  border: 1px solid #999;
+  background: white;
+  cursor: pointer;
+  margin-bottom: 40px;
+}
+
+button:hover {
+  background: #d9482b;
+  color: white;
+}
+
+h2 {
+  font-size: 40px;
+  margin-bottom: 20px;
+}
+
+
+.content-section {
+  background: white;
+  margin-top: 20px;
+  padding: 40px 50px;
+}
+
+.section-text {
+  color: #555;
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+}
+
+.initiatives-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.initiative-card {
+  border: 1px solid #ddd;
+  padding: 20px;
+  background: #fafafa;
+}
+
+.initiative-card h3 {
+  color: #d9482b;
+  margin-bottom: 12px;
+}
+
+.initiative-card p,
+.contact-line {
+  color: #555;
+  line-height: 1.5;
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.blog-card,
+.blog-empty {
+  border: 1px solid #ddd;
+  background: #fafafa;
+  padding: 16px;
+}
+
+.blog-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.blog-date {
+  color: #8a8a8a;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.blog-body {
+  margin-top: 10px;
+  color: #555;
+  line-height: 1.6;
+}
+
+.contact-line {
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.contact-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.contact-header h2 {
+  margin-bottom: 0;
+}
+
+.message-icon-btn {
+  margin-bottom: 0;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border-radius: 50%;
+  border: 1px solid #c8c8c8;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.message-box {
+  margin-top: 16px;
+  border: 1px solid #ddd;
+  background: #fafafa;
+  padding: 16px;
+}
+
+.message-box.hidden {
+  display: none;
+}
+
+.message-box label {
+  display: block;
+  color: #444;
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+
+.message-box textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 100px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.message-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.message-actions button {
+  margin-bottom: 0;
+  padding: 10px 16px;
+}
+
+
+.hero-image img {
+  max-width: 500px;
+}
+
+@media (max-width: 900px) {
+  .navbar,
+  .hero,
+  .content-section {
+    padding: 24px;
+  }
+
+  .hero {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .hero-text {
+    width: 100%;
+  }
+
+  .hero-text h1 {
+    font-size: 56px;
+  }
+
+  .hero-image img {
+    width: 100%;
+    max-width: 360px;
+  }
+
+  .initiatives-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blog-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-header h2 {
+    font-size: 34px;
+  }
+}
+
+.contact-line strong {
+  color: #d9482b;
+}
