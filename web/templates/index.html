@@ -9,96 +9,194 @@
 </head>
 <body>
 
-<header class="navbar">
+<header class="topbar">
   <div class="logo">Deena</div>
-  <nav>
-    <ul class="nav-links">
-      <li><a href="#overview">Administration Overview</a></li>
-      <li><a href="#initiatives">Campus Initiatives</a></li>
-      <li><a href="#blog">Blog Posts</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-    </nav>
+  <nav class="nav-pill" aria-label="Primary navigation">
+    <a href="#overview">Home</a>
+    <a href="#initiatives">About</a>
+    <a href="{% url 'blog_list' %}">Blog</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
 
-<main>
-<section id="overview" class="hero">
-  <div class="hero-text">
-    <p class="intro">WELCOME, I AM</p>
-    <h1>Deena</h1>
-    <p class="description">
-      I work in school and college administration, with a focus on building smooth academic operations and supportive learning environments. My work includes coordinating admissions, managing student services, planning institutional schedules, and collaborating with faculty and staff to improve campus outcomes. I am committed to clear communication, policy compliance, and student-centered administration.
+<main class="dashboard">
+  <div class="main-column">
+    <section id="overview" class="hero-panel">
+      <div class="hero-copy">
+        <p class="eyebrow">School Administration Profile</p>
+        <h1>DEENA</h1>
+        <p class="hero-summary">
+          I help schools and colleges run with more clarity, structure, and calm. My focus is on the people and processes that make campus life work every day.
+        </p>
+        <div class="hero-notes">
+          <p>Admissions, scheduling, and student services.</p>
+          <p>Clear communication with staff and families.</p>
+        </div>
+      </div>
 
-    </p>
+      <div class="hero-portrait">
+        <img src="{% static 'web/profile.png' %}" alt="Profile Image">
+      </div>
 
+      <div class="hero-footer">
+        <span>Campus operations</span>
+        <span>Student support</span>
+        <span>Institutional planning</span>
+      </div>
+    </section>
+
+    <section id="initiatives" class="section-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">About Work</p>
+          <h2>A practical approach to campus coordination</h2>
+        </div>
+        <p class="section-text">
+          I focus on the parts of administration that improve the experience for students, staff, and families.
+        </p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <span class="feature-index">01</span>
+          <h3>Admissions Coordination</h3>
+          <p>Clearer workflows, faster follow-ups, and better communication throughout the enrollment process.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-index">02</span>
+          <h3>Student Services</h3>
+          <p>Support for records, counseling referrals, and academic documents that keeps the process simple.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-index">03</span>
+          <h3>Academic Scheduling</h3>
+          <p>Timetables, exam calendars, and department planning organized for a smoother semester flow.</p>
+        </article>
+        <article class="feature-card">
+          <span class="feature-index">04</span>
+          <h3>Faculty Coordination</h3>
+          <p>Communication and planning support that helps teams stay aligned around shared goals.</p>
+        </article>
+      </div>
+    </section>
   </div>
 
-  <div class="hero-image">
-    <img src="{% static 'web/profile.png' %}" alt="Profile Image">
-  </div>
-</section>
+  <aside class="side-column">
+    <section id="blog" class="blog-panel">
+      <div class="section-heading section-heading-light">
+        <div>
+          <p class="eyebrow eyebrow-light">Blog Feed</p>
+          <h2>Recent Posts</h2>
+        </div>
+        <p class="section-text section-text-light">
+          Fresh updates published from the backend and shown here automatically.
+        </p>
+      </div>
 
-<section id="initiatives" class="content-section">
-  <h2>Campus Initiatives</h2>
-  <p class="section-text">
-    I support institutional growth through practical and student-focused administrative initiatives.
-  </p>
-  <div class="initiatives-grid">
-    <article class="initiative-card">
-      <h3>Admissions Coordination</h3>
-      <p>Improved admission workflows, application tracking, and communication with students and families.</p>
-    </article>
-    <article class="initiative-card">
-      <h3>Student Services</h3>
-      <p>Strengthened support systems for enrollment, records, counseling referrals, and academic documentation.</p>
-    </article>
-    <article class="initiative-card">
-      <h3>Academic Scheduling</h3>
-      <p>Coordinated class schedules, exam timelines, and department calendars for smooth semester operations.</p>
-    </article>
-  </div>
-</section>
+      <div class="blog-grid">
+        {% for post in blog_posts %}
+          <article class="blog-card">
+            {% if post.image %}
+              <img class="blog-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+            {% endif %}
+            <p class="blog-date">{{ post.date_uploaded|date:"M d, Y" }}</p>
+            <h3>{{ post.title }}</h3>
+            <p class="blog-body">{{ post.body|truncatechars:150 }}</p>
+            <a class="blog-read-more" href="{% url 'blog_detail' post.slug %}">Read full post</a>
+          </article>
+        {% empty %}
+          <article class="blog-card blog-card-empty">
+            <h3>No blog posts yet</h3>
+            <p>When a post is added in Django admin, it will appear here immediately.</p>
+          </article>
+        {% endfor %}
+      </div>
+    </section>
 
-<section id="blog" class="content-section blog-section">
-  <h2>Blog Posts</h2>
-  <p class="section-text">Latest updates published from the admin backend.</p>
+    <section id="contact" class="contact-panel">
+      <div class="contact-header">
+        <div>
+          <p class="eyebrow">Contact</p>
+          <h2>{{ contact_info.page_title }}</h2>
+        </div>
+      </div>
+      <p class="section-text">
+        {{ contact_info.intro_text }}
+      </p>
+      <div class="contact-methods">
+        <a class="contact-method" href="mailto:{{ contact_info.email }}">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M4 6.5h16v11H4v-11Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="m4.5 7 7.5 6 7.5-6" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+            </svg>
+          </span>
+          <span>
+            <strong>Email</strong>
+            <small>{{ contact_info.email }}</small>
+          </span>
+        </a>
 
-  <div class="blog-grid">
-    {% for post in blog_posts %}
-      <article class="blog-card">
-        {% if post.image %}
-          <img class="blog-image" src="{{ post.image.url }}" alt="{{ post.title }}">
-        {% endif %}
-        <p class="blog-date">{{ post.date_uploaded|date:"M d, Y" }}</p>
-        <h3>{{ post.title }}</h3>
-        <p class="blog-body">{{ post.body|truncatechars:220 }}</p>
-      </article>
-    {% empty %}
-      <article class="blog-empty">
-        <h3>No blog posts yet</h3>
-        <p>Create a post in Django admin and it will appear here automatically.</p>
-      </article>
-    {% endfor %}
-  </div>
-</section>
+        <a class="contact-method" href="tel:{{ contact_info.phone|cut:' '|cut:'('|cut:')'|cut:'-' }}">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M8 5.5h8A1.5 1.5 0 0 1 17.5 7v10A1.5 1.5 0 0 1 16 18.5H8A1.5 1.5 0 0 1 6.5 17V7A1.5 1.5 0 0 1 8 5.5Z" stroke="currentColor" stroke-width="1.8"/>
+              <path d="M10 16.5h4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <span>
+            <strong>Phone</strong>
+            <small>{{ contact_info.phone }}</small>
+          </span>
+        </a>
 
-<section id="contact" class="content-section">
-  <div class="contact-header">
-    <h2>Contact</h2>
-    <button id="messageToggle" class="message-icon-btn" type="button" aria-label="Open message box" title="Send a message">&#9993;</button>
-  </div>
-  <p class="section-text">you can contact me through following media</p>
-  <p class="contact-line"><strong>Email:</strong> deena.admin@gmail.com</p>
-  <p class="contact-line"><strong>Phone:</strong> +1 (000) 123-4567</p>
-  <div id="messageBox" class="message-box hidden" aria-hidden="true">
-    <label for="adminMessage">Message</label>
-    <textarea id="adminMessage" rows="4" placeholder="Write your message here..."></textarea>
-    <div class="message-actions">
-      <button id="sendMessageBtn" type="button">Send</button>
-      <button id="closeMessageBtn" type="button">Close</button>
-    </div>
-  </div>
-</section>
+        <button class="contact-method contact-method-button" id="whatsappToggle" type="button" aria-label="Open WhatsApp message box" data-whatsapp-number="{{ contact_info.whatsapp_number }}">
+          <span class="contact-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 4.5a7.5 7.5 0 0 0-6.2 11.7L4.5 20l3.9-1.2A7.5 7.5 0 1 0 12 4.5Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+              <path d="M9.5 9.5c.2-.4.5-.5.8-.3l1 1c.2.2.2.5.1.8l-.4.6c.5.9 1.1 1.5 2 2l.6-.4c.3-.2.6-.1.8.1l1 1c.2.2.1.6-.3.8-.5.3-1.2.5-2 .4-2.7-.2-5-2.5-5.2-5.2-.1-.8.1-1.5.4-2Z" fill="currentColor"/>
+            </svg>
+          </span>
+          <span>
+            <strong>{{ contact_info.whatsapp_label }}</strong>
+            <small>{{ contact_info.whatsapp_help_text }}</small>
+          </span>
+        </button>
+      </div>
+
+      <div class="social-section">
+        <p class="social-title">Find me on social media</p>
+        <div class="social-links">
+          <a class="social-link" href="{{ contact_info.instagram_url }}" target="_blank" rel="noreferrer" aria-label="Instagram">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="5" y="5" width="14" height="14" rx="4" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.3" stroke="currentColor" stroke-width="1.8"/><circle cx="16.8" cy="7.2" r="1" fill="currentColor"/></svg>
+          </a>
+          <a class="social-link" href="{{ contact_info.linkedin_url }}" target="_blank" rel="noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6.5 9.2h2.9v8.3H6.5V9.2Zm1.5-4a1.7 1.7 0 1 1 0 3.4 1.7 1.7 0 0 1 0-3.4Zm4.6 4h2.8v1.1h.1c.4-.7 1.4-1.4 2.9-1.4 3.1 0 3.7 2 3.7 4.6v4H19v-3.6c0-.9 0-2.1-1.3-2.1-1.4 0-1.6 1-1.6 2v3.7h-2.8V9.2Z" fill="currentColor"/></svg>
+          </a>
+          <a class="social-link" href="{{ contact_info.youtube_url }}" target="_blank" rel="noreferrer" aria-label="YouTube">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 7.2c1.7 0 3.4.1 4.2.2.7.1 1.2.6 1.4 1.3.2 1 .2 2.4.2 3.3s0 2.3-.2 3.3c-.2.7-.7 1.2-1.4 1.3-.8.1-2.5.2-4.2.2s-3.4-.1-4.2-.2c-.7-.1-1.2-.6-1.4-1.3-.2-1-.2-2.4-.2-3.3s0-2.3.2-3.3c.2-.7.7-1.2 1.4-1.3.8-.1 2.5-.2 4.2-.2Z" stroke="currentColor" stroke-width="1.8"/><path d="m10.2 9.8 4.6 2.2-4.6 2.2V9.8Z" fill="currentColor"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div id="messageBox" class="message-box hidden" aria-hidden="true">
+        <div class="message-box-panel" role="dialog" aria-modal="true" aria-labelledby="messageBoxTitle">
+          <div class="message-box-header">
+            <div>
+              <p class="eyebrow">Message</p>
+              <h3 id="messageBoxTitle">Write your WhatsApp message</h3>
+            </div>
+            <button id="closeMessageBtn" class="message-close-btn" type="button" aria-label="Close message box">&times;</button>
+          </div>
+          <label for="adminMessage">Message</label>
+          <textarea id="adminMessage" rows="4" placeholder="Write your message here..."></textarea>
+          <div class="message-actions">
+            <button id="sendMessageBtn" type="button">Send on WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </aside>
 </main>
 
 <script src="{% static 'web/script.js' %}"></script>

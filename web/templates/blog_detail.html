@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ post.title }} | Deena Blog</title>
+  <link rel="stylesheet" href="{% static 'web/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Deena</div>
+    <nav class="nav-pill" aria-label="Primary navigation">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'blog_list' %}">Blog</a>
+      <a href="{% url 'index' %}#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="blog-detail-page">
+    <article class="blog-detail-card">
+      <p class="eyebrow">Blog Post</p>
+      <h1>{{ post.title }}</h1>
+      <p class="blog-date">{{ post.date_uploaded|date:"M d, Y" }}</p>
+
+      {% if post.image %}
+        <img class="blog-detail-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+      {% endif %}
+
+      <div class="blog-detail-body">
+        {{ post.body|linebreaks }}
+      </div>
+
+      <div class="blog-action-row">
+        <form method="post" class="inline-form">
+          {% csrf_token %}
+          <input type="hidden" name="action" value="like">
+          <button type="submit" class="like-button">Like ({{ post.likes }})</button>
+        </form>
+      </div>
+    </article>
+
+    <section class="comments-card">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Comments</p>
+          <h2>{{ post.comments.count }} Responses</h2>
+        </div>
+      </div>
+
+      <form method="post" class="comment-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="comment">
+        <div class="comment-grid">
+          <input type="text" name="name" placeholder="Your name" required>
+          <input type="email" name="email" placeholder="Your email (optional)">
+        </div>
+        <textarea name="content" rows="5" placeholder="Write your comment" required></textarea>
+        <button type="submit">Post Comment</button>
+      </form>
+
+      <div class="comment-list">
+        {% for comment in post.comments.all %}
+          <article class="comment-item">
+            <div class="comment-meta">
+              <strong>{{ comment.name }}</strong>
+              <span>{{ comment.created_at|date:"M d, Y H:i" }}</span>
+            </div>
+            <p>{{ comment.content|linebreaksbr }}</p>
+          </article>
+        {% empty %}
+          <p class="section-text">No comments yet. Start the discussion below.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+</body>
+</html>

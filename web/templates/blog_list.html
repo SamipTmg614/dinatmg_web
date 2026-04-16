@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Blog | Deena</title>
+  <link rel="stylesheet" href="{% static 'web/style.css' %}">
+</head>
+<body>
+  <header class="topbar">
+    <div class="logo">Deena</div>
+    <nav class="nav-pill" aria-label="Primary navigation">
+      <a href="{% url 'index' %}">Home</a>
+      <a href="{% url 'blog_list' %}">Blog</a>
+      <a href="{% url 'index' %}#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main class="blog-page">
+    <section class="blog-page-hero">
+      <p class="eyebrow">Blog Feed</p>
+      <h1>All Blog Posts</h1>
+      <p class="hero-summary">Read the full posts, view comments, and react with a like from each individual post page.</p>
+    </section>
+
+    <section class="blog-list-grid">
+      {% for post in posts %}
+        <article class="blog-list-card blog-list-card-clickable" data-url="{% url 'blog_detail' post.slug %}" tabindex="0" role="link" aria-label="Open {{ post.title }}">
+          {% if post.image %}
+            <img class="blog-list-image" src="{{ post.image.url }}" alt="{{ post.title }}">
+          {% endif %}
+          <p class="blog-date">{{ post.date_uploaded|date:"M d, Y" }}</p>
+          <h2>{{ post.title }}</h2>
+          <p>{{ post.body|truncatechars:260 }}</p>
+          <div class="blog-list-meta">
+            <span>{{ post.likes }} likes</span>
+            <span>{{ post.comments.count }} comments</span>
+          </div>
+          <a class="blog-read-more" href="{% url 'blog_detail' post.slug %}">Read full post</a>
+        </article>
+      {% empty %}
+        <article class="blog-list-card blog-list-empty">
+          <h2>No posts yet</h2>
+          <p>Publish your first blog post from the Django admin panel.</p>
+        </article>
+      {% endfor %}
+    </section>
+  </main>
+
+  <script src="{% static 'web/script.js' %}"></script>
+</body>
+</html>
